@@ -1,0 +1,1 @@
+<div class="<?= $this->class ?> <?php echo $this->grid_classes; ?> "<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
