@@ -3,7 +3,7 @@
     "description": "Tailwind Bundle for Contao",
     "keywords": ["contao", "tailwind", "css"],
     "type":"contao-bundle",
-    "license": "LGPL-3.0-or-later",
+    "license": "MIT License",
     "authors": [
         {
             "name": "Nico Enevoldsen",
