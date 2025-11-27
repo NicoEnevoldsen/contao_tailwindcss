@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
         ],
         'breakpoints' => [
             'inputType'               => 'keyValueWizard',
-            'eval'                    => ['keyLabel' => $GLOBALS['TL_LANG']['tl_tailwind_settings']['breakpoints_keyLabel'], 'valueLabel' => $GLOBALS['TL_LANG']['tl_tailwind_settings']['breakpoints_valueLabel'], 'tl_class'=>'w50 clr'],
+            'eval'                    => ['keyLabel' => &$GLOBALS['TL_LANG']['tl_tailwind_settings']['breakpoints_keyLabel'], 'valueLabel' => &$GLOBALS['TL_LANG']['tl_tailwind_settings']['breakpoints_valueLabel'], 'tl_class'=>'w50 clr'],
             'sql'                     => "text NULL",
             'load_callback' => [
                 function ($value, $dca) {
@@ -82,7 +82,7 @@ $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
         ],
         'colors' => [
             'inputType'               => 'keyValueWizard',
-            'eval'                    => ['keyLabel' => $GLOBALS['TL_LANG']['tl_tailwind_settings']['colors_keyLabel'], 'valueLabel' => $GLOBALS['TL_LANG']['tl_tailwind_settings']['colors_valueLabel'], 'tl_class'=>'w50'],
+            'eval'                    => ['keyLabel' => &$GLOBALS['TL_LANG']['tl_tailwind_settings']['colors_keyLabel'], 'valueLabel' => &$GLOBALS['TL_LANG']['tl_tailwind_settings']['colors_valueLabel'], 'tl_class'=>'w50'],
 			'sql'                     => "text NULL"
         ]
 
