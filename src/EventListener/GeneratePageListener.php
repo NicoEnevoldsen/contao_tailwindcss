@@ -170,6 +170,24 @@ class GeneratePageListener
             $classes = array_merge($classes, explode(" ", $classes_string));
         }
 
+
+        $objContent = $this->objDatabase->prepare("
+            SELECT DISTINCT unfilteredHtml AS content FROM tl_content WHERE unfilteredHtml != ''
+            UNION SELECT DISTINCT html AS content FROM tl_content WHERE html != ''
+            UNION SELECT DISTINCT text AS content FROM tl_content WHERE text != ''
+            UNION SELECT DISTINCT html FROM tl_module WHERE html != ''
+        ")->execute();
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        while($objContent->next()) {
+            $dom->loadHTML($objContent->content);
+            $xpath = new \DOMXPath($dom);
+            $nodes = $xpath->query('//*[@class]'); // jedes Element mit class-Attribut
+            foreach ($nodes as $node) {
+                $classes = array_merge($classes, explode(" ", $node->getAttribute("class")));
+            }
+        }
+
         if (isset($GLOBALS['TL_HOOKS']['generateTailwindCss']) && \is_array($GLOBALS['TL_HOOKS']['generateTailwindCss'])) {
             foreach ($GLOBALS['TL_HOOKS']['generateTailwindCss'] as $callback) {
                 $classes = System::importStatic($callback[0])->{$callback[1]}($classes);
