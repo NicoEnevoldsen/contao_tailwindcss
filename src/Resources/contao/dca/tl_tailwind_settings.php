@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
         ],
         'input_file' => [
             'inputType'               => 'fileTree',
-            'eval'                    => ['multiple'=>false, 'fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'css,scss,less', 'mandatory'=>true],
+            'eval'                    => ['multiple'=>false, 'fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'css,scss,less', 'mandatory'=>false],
             'sql'                     => "binary(16) NULL"
         ],
         'config' => [

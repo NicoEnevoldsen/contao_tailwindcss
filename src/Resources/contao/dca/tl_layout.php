@@ -1,8 +1,10 @@
 <?php
 
+
+
     $GLOBALS['TL_DCA']['tl_layout']['fields']['tailwind'] = [
         'exclude'    => true,
-        'inputType'  => 'checkboxWizard',
+        'inputType'  => 'select',
         'options_callback' => function () {
             $arr = [];
             $obj = \Contao\Database::getInstance()->execute("SELECT id, title FROM tl_tailwind_settings ORDER BY title");
@@ -11,7 +13,7 @@
             }
             return $arr;
         },
-        'eval'       => ['mandatory' => false, 'multiple' => true],
+        'eval'       => ['mandatory' => false, 'multiple' => false],
         'sql'        => "blob NULL",
     ] ;
 
