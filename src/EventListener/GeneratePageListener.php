@@ -10,6 +10,7 @@ use Contao\LayoutModel;
 use Psr\Log\LoggerInterface;
 use Contao\System;
 use Contao\PageRegular;
+use Symfony\Component\Filesystem\Filesystem;
 
 #[AsHook('generatePage')]
 class GeneratePageListener
@@ -108,7 +109,8 @@ class GeneratePageListener
                 $this->logger->info("Error running Tailwind CLI:\n".implode("\n", $output));
             }
 
-            @unlink($tailwind_file);
+            @unlink($combined_file);
+            (new Filesystem())->remove($this->assets_dir);
         }
 
         $GLOBALS['TL_CSS'][] = $output_file.'|static';
