@@ -27,6 +27,7 @@ class GeneratePageListener
 
         if(!file_exists($this->assets_dir)) mkdir($this->assets_dir);
         if(!file_exists($this->tmp_dir."/css")) mkdir($this->tmp_dir."/css");
+        if(!file_exists($this->tmp_dir."/templates")) mkdir($this->tmp_dir."/templates");
         if(!file_exists($this->bundle_dir."/src/TailwindBinary")) mkdir($this->bundle_dir."/src/TailwindBinary");
 
         if(PHP_OS == "Linux" && php_uname('m') === 'arm64')     $this->tailwind_binary = "tailwindcss-linux-arm64";
@@ -97,9 +98,8 @@ class GeneratePageListener
             file_put_contents($combined_file, $combined_css);
             touch($combined_file, time());
 
-            if($input_file) $command = $this->bundle_dir.'/src/TailwindBinary/'.$this->tailwind_binary.' -i '.$combined_file.' -o '.$output_file.' --minify 2>&1';
-            else            $command = $this->bundle_dir.'/src/TailwindBinary/'.$this->tailwind_binary.' -o '.$output_file.' --minify 2>&1';
-
+            @unlink($output_file);
+            $command = $this->bundle_dir.'/src/TailwindBinary/'.$this->tailwind_binary.' -i '.$combined_file.' -o '.$output_file.' --minify  2>&1';
             exec($command, $output, $return_var);
             if ($return_var === 0) {
                 $this->logger->info("Tailwind build successful:\n".implode("\n", $output));
@@ -156,6 +156,17 @@ class GeneratePageListener
 
 
     private function getHelperTemplate() {
+
+        foreach ($GLOBALS['BE_MOD'] as $group) {
+            foreach ($group as $module) {
+                if (!empty($module['tables']) && is_array($module['tables'])) {
+                    foreach ($module['tables'] as $table) {
+                        \Contao\Controller::loadDataContainer($table);
+                    }
+                }
+            }
+        }
+
         $sqls = ["SELECT DISTINCT attributes AS classes FROM tl_form"];
         foreach ($GLOBALS['TL_DCA'] as $table => $dca) {
             if(isset($dca['fields']['cssID']))      $sqls[] = 'SELECT DISTINCT cssID AS classes FROM '.$table;
@@ -169,7 +180,6 @@ class GeneratePageListener
             else                $classes_string = $field_values[1];
             $classes = array_merge($classes, explode(" ", $classes_string));
         }
-
 
         $objContent = $this->objDatabase->prepare("
             SELECT DISTINCT unfilteredHtml AS content FROM tl_content WHERE unfilteredHtml != ''
