@@ -13,7 +13,7 @@
             }
             return $arr;
         },
-        'eval'       => ['mandatory' => false, 'multiple' => false],
+        'eval'       => ['mandatory' => false, 'multiple' => false, 'includeBlankOption'=>true],
         'sql'        => "blob NULL",
     ] ;
 
