@@ -39,7 +39,7 @@ class GeneratePageListener
 
         if($this->tailwind_binary) {
             if(!file_exists($this->bundle_dir."/src/TailwindBinary/".$this->tailwind_binary)) {
-                exec("wget -O ".$this->bundle_dir."/src/TailwindBinary/".$this->tailwind_binary." https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 2>&1", $output, $return_var);
+                exec("wget -O ".$this->bundle_dir."/src/TailwindBinary/".$this->tailwind_binary." https://github.com/tailwindlabs/tailwindcss/releases/latest/download/".$this->tailwind_binary." 2>&1", $output, $return_var);
                 if ($return_var === 0) {
                     $this->logger->info("The Tailwind binary has been downloaded.");
                 } else {
