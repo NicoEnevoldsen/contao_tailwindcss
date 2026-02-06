@@ -20,7 +20,7 @@ class GeneratePageListener
     public function __construct(){
         $this->objDatabase = Database::getInstance();
         $this->project_dir  = System::getContainer()->getParameter('kernel.project_dir');
-        $this->bundle_dir   = \dirname(__DIR__, 2);
+        $this->bundle_dir = '../vendor/ne-dev/contao-tailwind-bundle';
         $this->tmp_dir      = $this->project_dir.'/system/tmp';
         $this->assets_dir   = $this->project_dir."/assets/css";
         $this->logger       = System::getContainer()->get('monolog.logger.contao.general');
