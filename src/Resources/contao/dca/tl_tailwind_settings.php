@@ -1,6 +1,7 @@
 <?php
 
 use Contao\DC_Table;
+use Contao\StringUtil;
 
 $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
     'config' => [
@@ -59,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
             'sql'                     => "text NULL",
             'load_callback' => [
                 function ($value, $dca) {
-                    if($value == null || count(unserialize($value)) == 0) {
+                    if($value == null || count(StringUtil::deserialize($value, true)) == 0) {
                         $value = serialize($GLOBALS['tailwind']['default_breakpoints']);
                     }
                     return $value;
@@ -67,15 +68,15 @@ $GLOBALS['TL_DCA']['tl_tailwind_settings'] = [
             ],
             'save_callback' => [
                 function ($value, $dca) {
-                    if($value == null || count(unserialize($value)) == 0) {
+
+                    if($value == null || count(StringUtil::deserialize($value, true)) == 0) {
                         $value = $GLOBALS['tailwind']['default_breakpoints'];
                     } else {
-                        $value = unserialize($value);
+                        $value = StringUtil::deserialize($value, true);
                         usort($value, function ($a, $b) {
                             return $a["value"] <=> $b["value"];
                         });
                     }
-                    $value = serialize($value);
                     return $value;
                 },
             ]
