@@ -183,6 +183,7 @@ class GeneratePageListener
             $classes = array_merge($classes, explode(" ", $classes_string));
         }
 
+
         $objContent = $this->objDatabase->prepare("
             SELECT DISTINCT unfilteredHtml AS content FROM tl_content WHERE unfilteredHtml != ''
             UNION SELECT DISTINCT html AS content FROM tl_content WHERE html != ''
@@ -210,7 +211,8 @@ class GeneratePageListener
         $classes = array_filter($classes);
         asort($classes);
 
-        $new_classes = '<div class="'.implode(" ", $classes).'"></div>';
+        $new_classes = '<div class="'.html_entity_decode(implode(" ", $classes)).'"></div>';
+
         if(!file_exists($this->tmp_dir.'/templates/tailwind.html5') || file_get_contents($this->tmp_dir.'/templates/tailwind.html5') != $new_classes) {
             file_put_contents($this->tmp_dir.'/templates/tailwind.html5', $new_classes);
             touch($this->tmp_dir.'/templates/tailwind.html5', time());
